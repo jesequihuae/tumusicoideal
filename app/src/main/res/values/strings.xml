@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">TuMusicoIdeal</string>
+    <string name="registroUsuario">Registro de usuario</string>
+    <string name="hint_nombre">Nombre</string>
+    <string name="hint_apellidoP">Apellido Paterno</string>
+    <string name="hint_apellidoM">Apellido Materno</string>
+    <string name="hint_telefono">Teléfono</string>
+    <string name="hint_telefonoOpcional">Teléfono (opcional)</string>
+    <string name="hint_usuario">Usuario</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="hint_password2">Repetir Contraseña</string>
+    <string name="hint_imagenPerfil">Elegir imagen perfil</string>
+    <string name="pais">País</string>
+    <string name="estado">Estado</string>
+    <string name="ciudad">Ciudad</string>
+    <string name="titleMainToolbar">Músicos</string>
+    <string name="actualizar_menu">Actualizar</string>
+    <string name="about">Acerca de</string>
+    <string name="open_drawer">Abrir</string>
+    <string name="close_drawer">Cerrar</string>
+    <string name="login">Log in</string>
+    <string name="registro">Registrarse</string>
+    <string name="hint_usuario_login">Usuario</string>
+    <string name="hint_password_login">Contraseña</string>
+    <string name="cancel">Cancelar</string>
+</resources>
