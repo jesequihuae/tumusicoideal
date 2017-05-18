@@ -36,14 +36,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class RegistroCliente extends AppCompatActivity implements View.OnClickListener{
+public class RegistroCliente extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     private static final int PHOTO_SELECTED = 1;
 
-    Spinner spinnerPais;
+    MaterialBetterSpinner spinnerPais;
     MaterialBetterSpinner spinnerEstado;
+    MaterialBetterSpinner spinnerCiudad;
     ArrayAdapter<Paises> arrayAdapterPais;
     ArrayAdapter<String> arrayAdapterEstado;
+    ArrayAdapter<String> arrayAdapterCiudad;
     Button btnGaleria;
     ImageView imagePreview;
     private Uri url_imagen;
@@ -65,87 +67,48 @@ public class RegistroCliente extends AppCompatActivity implements View.OnClickLi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         new GetPaises().execute();
 
-        arrayAdapterPais = new ArrayAdapter<Paises>(this,android.R.layout.simple_dropdown_item_1line, PaisDatos);
-        spinnerPais =  (Spinner) findViewById(R.id.spinnerPais);
-        spinnerPais.setAdapter(arrayAdapterPais);
-        spinnerPais.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //arrayAdapterPais = new ArrayAdapter<Paises>(this,android.R.layout.simple_dropdown_item_1line, PaisDatos);
+        //spinnerPais =  (MaterialBetterSpinner) findViewById(R.id.spinnerPais);
+        //spinnerPais.setAdapter(arrayAdapterPais);
+        //spinnerPais.setOnItemClickListener((AdapterView.OnItemClickListener)this);
 
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(RegistroCliente.this,
-                        "OnItemSelectedListener : " + parent.getItemAtPosition(position).toString(),
-                        Toast.LENGTH_SHORT).show();
-            }
+        //arrayAdapterEstado = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, EstadoDatos);
+        //spinnerEstado = (MaterialBetterSpinner) findViewById(R.id.spinnerEstado);
+        //spinnerEstado.setAdapter(arrayAdapterEstado);
+        //spinnerEstado.setOnItemClickListener(this);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        arrayAdapterEstado = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, EstadoDatos);
-        spinnerEstado = (MaterialBetterSpinner) findViewById(R.id.spinnerEstado);
-        spinnerEstado.setAdapter(arrayAdapterEstado);
-        spinnerEstado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("****ASASASA***","si ENTRO");
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        //llenarPaises(); //Llnea lista de paises
-
-       // initSpinners(); //Inicializa los Spinners
+        initSpinners(); //Inicializa los Spinners
         btnGaleria = (Button) findViewById(R.id.btn_abrirGaleria);
-        btnGaleria.setOnClickListener(this);
+        btnGaleria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(
+                        Intent.createChooser(intent, "Seleccione una imagen"),
+                        PHOTO_SELECTED);
+            }
+        });
         imagePreview = (ImageView) findViewById(R.id.imagePreview);
 
     }
 
     protected  void initSpinners(){
 
-        ArrayAdapter<Paises> arrayAdapterPais = new ArrayAdapter<Paises>(this,android.R.layout.simple_dropdown_item_1line, PaisDatos);
-        ArrayAdapter<String> arrayAdapterEstado = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, EstadoDatos);
-        ArrayAdapter<String> arrayAdapterCiudad = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, CiudadDatos);
+        arrayAdapterPais = new ArrayAdapter<Paises>(this,android.R.layout.simple_dropdown_item_1line, PaisDatos);
+        arrayAdapterEstado = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, EstadoDatos);
+        arrayAdapterCiudad = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, CiudadDatos);
 
-        spinnerPais =  (Spinner) findViewById(R.id.spinnerPais);
-        MaterialBetterSpinner spinnerEstado = (MaterialBetterSpinner) findViewById(R.id.spinnerEstado);
-        MaterialBetterSpinner spinnerCiudad = (MaterialBetterSpinner) findViewById(R.id.spinnerCiudad);
+        spinnerPais =  (MaterialBetterSpinner) findViewById(R.id.spinnerPais);
+        spinnerEstado = (MaterialBetterSpinner) findViewById(R.id.spinnerEstado);
+        spinnerCiudad = (MaterialBetterSpinner) findViewById(R.id.spinnerCiudad);
 
         spinnerPais.setAdapter(arrayAdapterPais);
         spinnerEstado.setAdapter(arrayAdapterEstado);
         spinnerCiudad.setAdapter(arrayAdapterCiudad);
 
-        spinnerPais.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerPais.setOnItemClickListener(this);
 
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(parent.getContext(),
-                        "OnItemSelectedListener : " + parent.getItemAtPosition(position).toString(),
-                        Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        if(v.getId() == R.id.btn_abrirGaleria){
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/*");
-            startActivityForResult(
-                    Intent.createChooser(intent, "Seleccione una imagen"),
-                    PHOTO_SELECTED);
-        }
     }
 
     @Override
@@ -171,6 +134,12 @@ public class RegistroCliente extends AppCompatActivity implements View.OnClickLi
         BufferedInputStream buffer = new BufferedInputStream(stream);
         Bitmap imagen = BitmapFactory.decodeStream(buffer);
         imagePreview.setImageBitmap(imagen);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d("***d***",""+((Paises)parent.getItemAtPosition(position)).getId());
+        Log.d("****SII****",""+((Paises)parent.getItemAtPosition(position)).toString());
     }
 
 
@@ -237,6 +206,8 @@ public class RegistroCliente extends AppCompatActivity implements View.OnClickLi
             return null;
         }
     }
+
+
 
 }
 
