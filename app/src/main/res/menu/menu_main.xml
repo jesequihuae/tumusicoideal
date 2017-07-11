@@ -6,15 +6,21 @@
     android:background="@color/colorAccent"
     tools:context=".MainActivity">
 
-    <item android:id="@+id/action_refresh"
-    android:title="---"
-    android:orderInCategory="200"
-    app:showAsAction="ifRoom" />
-
+    <item
+        android:id="@+id/action_refresh"
+        android:title="---"
+        android:orderInCategory="200"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_new"
         android:title="@string/about"
+        android:orderInCategory="300"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/donations"
+        android:title="@string/donations"
         android:orderInCategory="300"
         app:showAsAction="never" />
 </menu>
