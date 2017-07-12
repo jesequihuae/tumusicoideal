@@ -7,10 +7,10 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/action_refresh"
-        android:title="---"
+        android:id="@+id/Actualizar"
+        android:icon="@drawable/ic_refresh"
         android:orderInCategory="200"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_new"

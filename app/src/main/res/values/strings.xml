@@ -24,4 +24,5 @@
     <string name="hint_password_login">Contraseña</string>
     <string name="cancel">Cancelar</string>
     <string name="donations">Donar</string>
+    <string name="informacionUsuario">Información de músico</string>
 </resources>

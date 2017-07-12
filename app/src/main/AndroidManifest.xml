@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.jesus.tumusicoideal">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -18,7 +18,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegistroCliente" />
-        <activity android:name=".Login" android:theme="@style/loginStyle"></activity>
+        <activity
+            android:name=".Login"
+            android:theme="@style/loginStyle" />
+        <activity android:name=".MusicoInformacion" android:configChanges="screenSize|orientation"></activity>
     </application>
 
 </manifest>

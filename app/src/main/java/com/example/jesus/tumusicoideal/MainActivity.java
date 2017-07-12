@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         toolbar = (Toolbar) findViewById(R.id.toolbarMain);
         setSupportActionBar(toolbar);
-        toolbar.setTitle(R.string.titleMainToolbar);
+        getSupportActionBar().setTitle(R.string.titleMainToolbar);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setItemIconTintList(null);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -99,11 +99,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.action_refresh){
-            Toast.makeText(MainActivity.this, "Refresh App", Toast.LENGTH_LONG).show();
-        }
         if(id == R.id.action_new){
             Toast.makeText(MainActivity.this, "Create Text", Toast.LENGTH_LONG).show();
+        }
+        if(id == R.id.Actualizar){
+            musicos.clear();
+            new getMusicos().execute();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -150,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             progress = new ProgressDialog(MainActivity.this);
             progress.setMessage("Loading...");
             progress.setTitle("Obteniendo músicos");
+            progress.setCanceledOnTouchOutside(false);
             progress.show();
         }
 
@@ -192,10 +194,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         for (int i = 0; i < jsonAr.length(); i++)
                         {
                             JSONObject obj = (JSONObject) jsonAr.get(i);
-                            musicos.add(new Musico(obj.getString("nombre")+" "+obj.getString("apellido_paterno")+" "+obj.getString("apellido_materno"), obj.getString("telefono1")));
-                            Log.d("***dasds***",obj.getString("nombre")+" "+obj.getString("apellido_paterno")+" "+obj.getString("apellido_materno")+" "+obj.getString("telefono1"));
+                            musicos.add(new Musico(obj.getString("id"), obj.getString("nombre")+" "+obj.getString("apellido_paterno")+" "+obj.getString("apellido_materno"), obj.getString("telefono1")));
+                            //Log.d("***dasds***",obj.getString("nombre")+" "+obj.getString("apellido_paterno")+" "+obj.getString("apellido_materno")+" "+obj.getString("telefono1"));
                         }
-                        Log.d("AUN SIGUE","SIMON");
+                       // Log.d("AUN SIGUE","SIMON");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

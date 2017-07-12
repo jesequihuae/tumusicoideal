@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -211,6 +212,17 @@ public class RegistroCliente extends AppCompatActivity{
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
@@ -349,13 +361,18 @@ public class RegistroCliente extends AppCompatActivity{
 
     }
 
-    private class GetPaises extends AsyncTask<Void, Void, Void>
+    private class GetPaises extends AsyncTask<Void, Void, Boolean>
     {
-
-        protected void onPostExecute(){ }
+        protected void onPreExecute()
+        {
+            progress = new ProgressDialog(RegistroCliente.this);
+            progress.setMessage("Loading...");
+            progress.setTitle("Obteniendo país!");
+            progress.show();
+        }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Boolean doInBackground(Void... params) {
             String sql = SERVER+"/ubicacion/paises";
 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -406,17 +423,26 @@ public class RegistroCliente extends AppCompatActivity{
                 e.printStackTrace();
             }
 
-            return null;
+            return true;
+        }
+
+        protected void onPostExecute(Boolean result){
+            progress.dismiss();
         }
     }
 
-    private class GetEstados extends AsyncTask<Void, Void, Void>
+    private class GetEstados extends AsyncTask<Void, Void, Boolean>
     {
-
-        protected void onPostExecute(){ }
+        protected void onPreExecute()
+        {
+            progress = new ProgressDialog(RegistroCliente.this);
+            progress.setMessage("Loading...");
+            progress.setTitle("Obteniendo Estados!");
+            progress.show();
+        }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Boolean doInBackground(Void... params) {
             String sql = SERVER+"/ubicacion/estados/"+idPais;
 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -468,17 +494,27 @@ public class RegistroCliente extends AppCompatActivity{
                 e.printStackTrace();
             }
 
-            return null;
+            return true;
+        }
+
+        protected void onPostExecute(Boolean result){
+            progress.dismiss();
         }
     }
 
-    private class GetCiudades extends AsyncTask<Void, Void, Void>
+    private class GetCiudades extends AsyncTask<Void, Void, Boolean>
     {
 
-        protected void onPostExecute(){ }
+        protected void onPreExecute()
+        {
+            progress = new ProgressDialog(RegistroCliente.this);
+            progress.setMessage("Loading...");
+            progress.setTitle("Obteniendo Ciudades!");
+            progress.show();
+        }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Boolean doInBackground(Void... params) {
             String sql = SERVER+"/ubicacion/ciudades/"+idEstado;
 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -530,7 +566,11 @@ public class RegistroCliente extends AppCompatActivity{
                 e.printStackTrace();
             }
 
-            return null;
+            return true;
+        }
+
+        protected void onPostExecute(Boolean result){
+            progress.dismiss();
         }
     }
 

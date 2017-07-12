@@ -7,8 +7,10 @@ public class Musico {
 
     String nombreCompleto;
     String telefono;
+    String idMusico;
 
-    Musico(String nombreCompleto, String telefono){
+    Musico(String id, String nombreCompleto, String telefono){
+        this.idMusico = id;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
     }
@@ -27,5 +29,13 @@ public class Musico {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getIdMusico() {
+        return idMusico;
+    }
+
+    public void setIdMusico(String idMusico) {
+        this.idMusico = idMusico;
     }
 }
